@@ -1,6 +1,6 @@
 {
   "name": "@the-convocation/twitter-scraper",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "main": "dist/_module.js",
   "repository": "https://github.com/the-convocation/twitter-scraper.git",
   "author": "karashiiro <49822414+karashiiro@users.noreply.github.com>",
@@ -36,6 +36,7 @@
     "@typescript-eslint/eslint-plugin": "^5.59.7",
     "@typescript-eslint/parser": "^5.59.7",
     "cz-conventional-changelog": "^3.3.0",
+    "dotenv": "^16.3.1",
     "eslint": "^8.41.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^4.2.1",
