@@ -10,6 +10,7 @@ import {
   parseSearchTimelineUsers,
 } from './timeline-search';
 import stringify from 'json-stable-stringify';
+import { ListSearchTimeline, parseListTimelineTweets } from './timeline-search-list';
 
 /**
  * The categories that can be used in Twitter searches.
@@ -59,6 +60,23 @@ export async function fetchSearchTweets(
   );
 
   return parseSearchTimelineTweets(timeline);
+}
+
+
+export async function fetchListTweets(
+  listId: string,
+  maxTweets: number,
+  auth: TwitterAuth,
+  cursor?: string,
+): Promise<QueryTweetsResponse> {
+  const timeline = await getListTimeline(
+    listId,
+    maxTweets,
+    auth,
+    cursor,
+  );
+
+  return parseListTimelineTweets(timeline);
 }
 
 export async function fetchSearchProfiles(
@@ -141,6 +159,62 @@ async function getSearchTimeline(
 
   const res = await requestApi<SearchTimeline>(
     `https://twitter.com/i/api/graphql/nK1dw4oV3k4w5TdtcAdSww/SearchTimeline?${params.toString()}`,
+    auth,
+  );
+  if (!res.success) {
+    throw res.err;
+  }
+
+  return res.value;
+}
+
+
+async function getListTimeline(
+  listId: string,
+  maxItems: number,
+  // searchMode: SearchMode,
+  auth: TwitterAuth,
+  cursor?: string,
+): Promise<ListSearchTimeline> {
+  if (!auth.isLoggedIn()) {
+    throw new Error('Scraper is not logged-in for search.');
+  }
+
+  if (maxItems > 50) {
+    maxItems = 50;
+  }
+
+  const variables: Record<string, any> = {
+    rawQuery: listId,
+    count: maxItems,
+    querySource: 'typed_query',
+    product: 'Top',
+  };
+
+  const features = addApiFeatures({
+    longform_notetweets_inline_media_enabled: true,
+    responsive_web_enhance_cards_enabled: false,
+    responsive_web_media_download_video_enabled: false,
+    responsive_web_twitter_article_tweet_consumption_enabled: false,
+    tweet_with_visibility_results_prefer_gql_limited_actions_policy_enabled:
+      true,
+  });
+
+  const fieldToggles: Record<string, any> = {
+    withArticleRichContentState: false,
+  };
+
+  if (cursor != null && cursor != '') {
+    variables['cursor'] = cursor;
+  }
+
+  const params = new URLSearchParams();
+  params.set('features', stringify(features));
+  params.set('fieldToggles', stringify(fieldToggles));
+  params.set('variables', stringify(variables));
+
+  const res = await requestApi<ListSearchTimeline>(
+    `https://twitter.com/i/api/graphql/hVmwm1awr93NKXPGdTXoGg/ListLatestTweetsTimeline?${params.toString()}`,
     auth,
   );
   if (!res.success) {

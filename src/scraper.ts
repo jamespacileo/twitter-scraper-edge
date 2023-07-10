@@ -4,6 +4,7 @@ import { TwitterAuth, TwitterGuestAuth } from './auth';
 import { TwitterUserAuth } from './auth-user';
 import { getProfile, getUserIdByScreenName, Profile } from './profile';
 import {
+  fetchListTweets,
   fetchSearchProfiles,
   fetchSearchTweets,
   SearchMode,
@@ -105,6 +106,14 @@ export class Scraper {
     cursor?: string,
   ): Promise<QueryTweetsResponse> {
     return fetchSearchTweets(query, maxTweets, searchMode, this.auth, cursor);
+  }
+
+  public fetchListTweets(
+    listId: string,
+    maxTweets: number,
+    cursor?: string,
+  ): Promise<QueryTweetsResponse> {
+    return fetchListTweets(listId, maxTweets, this.auth, cursor);
   }
 
   /**
