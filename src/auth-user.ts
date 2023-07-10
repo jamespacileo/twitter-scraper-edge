@@ -187,6 +187,10 @@ export class TwitterUserAuth extends TwitterGuestAuth {
       return;
     }
 
+    if (process.env.TWITTER_ALLOW_LOGOUT !== 'true') {
+      throw new Error("Should not log out! Only if needed!")
+    }
+
     await requestApi<void>(
       'https://api.twitter.com/1.1/account/logout.json',
       this,
