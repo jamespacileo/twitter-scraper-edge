@@ -34,6 +34,9 @@ devDependencies:
   '@tsconfig/node16':
     specifier: ^16.1.0
     version: 16.1.0
+  '@tsconfig/node18':
+    specifier: ^18.2.0
+    version: 18.2.0
   '@types/jest':
     specifier: ^29.5.1
     version: 29.5.1
@@ -1007,6 +1010,10 @@ packages:
 
   /@tsconfig/node16@16.1.0:
     resolution: {integrity: sha512-cfwhqrdZEKS+Iqu1OPDwmKsOV/eo7q4sPhWzOXc1rU77nnPFV3+77yPg8uKQ2e8eir6mERCvrKnd+EGa4qo4bQ==}
+    dev: true
+
+  /@tsconfig/node18@18.2.0:
+    resolution: {integrity: sha512-yhxwIlFVSVcMym3O31HoMnRXpoenmpIxcj4Yoes2DUpe+xCJnA7ECQP1Vw889V0jTt/2nzvpLQ/UuMYCd3JPIg==}
     dev: true
 
   /@types/babel__core@7.20.1:
