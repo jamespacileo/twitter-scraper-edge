@@ -2,6 +2,28 @@ import { authSearchScraper } from './auth.test';
 import { SearchMode } from './search';
 import { QueryTweetsResponse } from './timeline-v1';
 
+
+test('scraper can process search cursor on list', async () => {
+  const scraper = await authSearchScraper();
+
+  let cursor: string | undefined = undefined;
+  const maxTweets = 150;
+  let nTweets = 0;
+  while (nTweets < maxTweets) {
+    const res: QueryTweetsResponse = await scraper.fetchListTweets(
+      '1281464405444583424',
+      maxTweets,
+      cursor,
+    );
+
+    expect(res.next).toBeTruthy();
+
+    nTweets += res.tweets.length;
+    cursor = res.next;
+  }
+  expect(nTweets).toEqual(maxTweets);
+}, 1200000);
+
 test('scraper can process search cursor', async () => {
   const scraper = await authSearchScraper();
 
@@ -69,23 +91,3 @@ test('scraper can search tweets', async () => {
   expect(nTweets).toEqual(maxTweets);
 }, 1200000);
 
-
-test('scraper can process search cursor', async () => {
-  const scraper = await authSearchScraper();
-
-  let cursor: string | undefined = undefined;
-  const maxTweets = 150;
-  let nTweets = 0;
-  while (nTweets < maxTweets) {
-    const res: QueryTweetsResponse = await scraper.fetchListTweets(
-      '782400279861919745',
-      maxTweets,
-      cursor,
-    );
-
-    expect(res.next).toBeTruthy();
-
-    nTweets += res.tweets.length;
-    cursor = res.next;
-  }
-}, 1200000);
