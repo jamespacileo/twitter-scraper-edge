@@ -16,22 +16,34 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [16.x, 18.x]
+        node: [18.x]
     steps:
       - uses: actions/checkout@v3
       - name: Install Node.js ${{ matrix.node }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
+
+      - name: Check secrets
+        run: |
+          if [[ -z "${{ secrets.TWITTER_USERNAME }}" ]]; then
+            echo "Secret TWITTER_USERNAME is not set."
+          else
+            echo "Secret TWITTER_USERNAME is set."
+          fi
+          if [[ -z "${{ secrets.TWITTER_PASSWORD }}" ]]; then
+            echo "Secret TWITTER_PASSWORD is not set."
+          else
+            echo "Secret TWITTER_PASSWORD is set."
+          fi
       - name: Yarn
-        run: npm install -g yarn
+        run: npm install -g pnpm
       - name: Install
-        run: yarn install
+        run: pnpm install
       - name: Test
         env:
           TWITTER_USERNAME: ${{ secrets.TWITTER_USERNAME }}
           TWITTER_PASSWORD: ${{ secrets.TWITTER_PASSWORD }}
-          TWITTER_EMAIL: ${{ secrets.TWITTER_EMAIL }}
-        run: yarn test
+        run: pnpm test
       - name: Build
-        run: yarn build
+        run: pnpm build

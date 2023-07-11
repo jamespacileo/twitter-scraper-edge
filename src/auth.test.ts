@@ -3,7 +3,7 @@ import { Scraper } from './scraper';
 export async function authSearchScraper() {
   const username = process.env['TWITTER_USERNAME'];
   const password = process.env['TWITTER_PASSWORD'];
-  const email = process.env['TWITTER_EMAIL'];
+  // const email = process.env['TWITTER_EMAIL'];
   if (!username || !password) {
     throw new Error(
       'TWITTER_USERNAME and TWITTER_PASSWORD variables must be defined.',
@@ -11,7 +11,7 @@ export async function authSearchScraper() {
   }
 
   const scraper = new Scraper();
-  await scraper.login(username, password, email);
+  await scraper.login(username, password);
   return scraper;
 }
 
