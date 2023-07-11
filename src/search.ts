@@ -185,10 +185,8 @@ async function getListTimeline(
   }
 
   const variables: Record<string, any> = {
-    rawQuery: listId,
+    listId: listId,
     count: maxItems,
-    querySource: 'typed_query',
-    product: 'Top',
   };
 
   const features = addApiFeatures({
