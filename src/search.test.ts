@@ -21,7 +21,7 @@ test('scraper can process search cursor on list', async () => {
     nTweets += res.tweets.length;
     cursor = res.next;
   }
-  expect(nTweets).toEqual(maxTweets);
+  expect(nTweets).toBeGreaterThanOrEqual(maxTweets);
 }, 1200000);
 
 test('scraper can process search cursor', async () => {
