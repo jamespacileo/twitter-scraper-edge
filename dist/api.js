@@ -3,13 +3,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addApiParams = exports.addApiFeatures = exports.requestApi = exports.bearerToken2 = exports.bearerToken = void 0;
+exports.addApiParams = exports.addApiFeatures = exports.requestApi = exports.bearerToken = void 0;
 const errors_1 = require("./errors");
 const requests_1 = require("./requests");
 const headers_polyfill_1 = require("headers-polyfill");
 const cross_fetch_1 = __importDefault(require("cross-fetch"));
-exports.bearerToken = 'AAAAAAAAAAAAAAAAAAAAAPYXBAAAAAAACLXUNDekMxqa8h%2F40K4moUkGsoc%3DTYfbDKbT3jJPCEVnMYqilB28NHfOPqkca3qaAxGfsyKCs0wRbw';
-exports.bearerToken2 = 'AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA';
+exports.bearerToken = 'AAAAAAAAAAAAAAAAAAAAAFQODgEAAAAAVHTp76lzh3rFzcHbmHVvQxYYpTw%3DckAlMINMjmCwxUcaXbAN4XqJVdgMJaHqNOFgPMK0zN1qLqLQCF';
 /**
  * Used internally to send HTTP requests to the Twitter API.
  * @internal
@@ -72,6 +71,9 @@ async function requestApi(url, auth, method = 'GET') {
     }
 }
 exports.requestApi = requestApi;
+/**
+ * @internal
+ */
 function addApiFeatures(o) {
     return {
         ...o,

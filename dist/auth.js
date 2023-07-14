@@ -12,6 +12,10 @@ const cross_fetch_1 = __importDefault(require("cross-fetch"));
  * A guest authentication token manager. Automatically handles token refreshes.
  */
 class TwitterGuestAuth {
+    bearerToken;
+    jar;
+    guestToken;
+    guestCreatedAt;
     constructor(bearerToken) {
         this.bearerToken = bearerToken;
         this.jar = new tough_cookie_1.CookieJar();

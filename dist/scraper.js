@@ -14,14 +14,26 @@ const twUrl = 'https://twitter.com';
  * - Reusing Scraper objects is recommended to minimize the time spent authenticating unnecessarily.
  */
 class Scraper {
+    auth;
+    authTrends;
+    token;
     /**
      * Creates a new Scraper object.
      * - Scrapers maintain their own guest tokens for Twitter's internal API.
      * - Reusing Scraper objects is recommended to minimize the time spent authenticating unnecessarily.
      */
     constructor() {
-        this.auth = new auth_1.TwitterGuestAuth(api_1.bearerToken);
-        this.authTrends = new auth_1.TwitterGuestAuth(api_1.bearerToken2);
+        this.token = api_1.bearerToken;
+        this.useGuestAuth();
+    }
+    /**
+     * Initializes auth properties using a guest token.
+     * Used when creating a new instance of this class, and when logging out.
+     * @internal
+     */
+    useGuestAuth() {
+        this.auth = new auth_1.TwitterGuestAuth(this.token);
+        this.authTrends = new auth_1.TwitterGuestAuth(this.token);
     }
     /**
      * Fetches a Twitter profile.
@@ -151,7 +163,7 @@ class Scraper {
      */
     async login(username, password, email) {
         // Swap in a real authorizer for all requests
-        const userAuth = new auth_user_1.TwitterUserAuth(api_1.bearerToken2);
+        const userAuth = new auth_user_1.TwitterUserAuth(this.token);
         await userAuth.login(username, password, email);
         this.auth = userAuth;
         this.authTrends = userAuth;
@@ -163,8 +175,7 @@ class Scraper {
         await this.auth.logout();
         await this.authTrends.logout();
         // Swap in guest authorizers for all requests
-        this.auth = new auth_1.TwitterGuestAuth(api_1.bearerToken);
-        this.authTrends = new auth_1.TwitterGuestAuth(api_1.bearerToken2);
+        this.useGuestAuth();
     }
     /**
      * Retrieves all cookies for the current session.
@@ -178,7 +189,7 @@ class Scraper {
      * @param cookies The cookies to set for the current session.
      */
     async setCookies(cookies) {
-        const userAuth = new auth_user_1.TwitterUserAuth(api_1.bearerToken2);
+        const userAuth = new auth_user_1.TwitterUserAuth(this.token);
         for (const cookie of cookies) {
             await userAuth.cookieJar().setCookie(cookie, twUrl);
         }

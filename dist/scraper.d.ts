@@ -10,12 +10,19 @@ import { Tweet } from './tweets';
 export declare class Scraper {
     private auth;
     private authTrends;
+    private token;
     /**
      * Creates a new Scraper object.
      * - Scrapers maintain their own guest tokens for Twitter's internal API.
      * - Reusing Scraper objects is recommended to minimize the time spent authenticating unnecessarily.
      */
     constructor();
+    /**
+     * Initializes auth properties using a guest token.
+     * Used when creating a new instance of this class, and when logging out.
+     * @internal
+     */
+    private useGuestAuth;
     /**
      * Fetches a Twitter profile.
      * @param username The Twitter username of the profile to fetch, without an `@` at the beginning.

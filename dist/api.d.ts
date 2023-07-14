@@ -1,6 +1,5 @@
 import { TwitterAuth } from './auth';
-export declare const bearerToken = "AAAAAAAAAAAAAAAAAAAAAPYXBAAAAAAACLXUNDekMxqa8h%2F40K4moUkGsoc%3DTYfbDKbT3jJPCEVnMYqilB28NHfOPqkca3qaAxGfsyKCs0wRbw";
-export declare const bearerToken2 = "AAAAAAAAAAAAAAAAAAAAANRILgAAAAAAnNwIzUejRCOuH5E6I8xnZz4puTs%3D1Zv7ttfk8LF81IUq16cHjhLTvJu4FA33AGWWjCpTnA";
+export declare const bearerToken = "AAAAAAAAAAAAAAAAAAAAAFQODgEAAAAAVHTp76lzh3rFzcHbmHVvQxYYpTw%3DckAlMINMjmCwxUcaXbAN4XqJVdgMJaHqNOFgPMK0zN1qLqLQCF";
 /**
  * An API result container.
  */
@@ -20,6 +19,9 @@ export type RequestApiResult<T> = {
  * @param method - The HTTP method used when sending this request.
  */
 export declare function requestApi<T>(url: string, auth: TwitterAuth, method?: 'GET' | 'POST'): Promise<RequestApiResult<T>>;
+/**
+ * @internal
+ */
 export declare function addApiFeatures(o: object): {
     rweb_lists_timeline_redesign_enabled: boolean;
     responsive_web_graphql_exclude_directive_enabled: boolean;
